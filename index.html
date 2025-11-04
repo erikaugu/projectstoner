@@ -1,29 +1,21 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-  <meta charset="UTF-8">
-  <title>Replokalen 🎸</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header><h1>Replokalen</h1></header>
-  <main id="reps"></main>
+<script>
+async function loadReps() {
+  const repsContainer = document.getElementById('reps');
+  const response = await fetch('https://api.github.com/repos/<projectstoner>/bandrep-site/contents/_reps');
+  const files = await response.json();
 
-  <script>
-    fetch('/reps.json')
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById('reps');
-        data.forEach(rep => {
-          const section = document.createElement('section');
-          section.innerHTML = `
-            <img src="${rep.image}" alt="${rep.date}">
-            <h2>${rep.date}</h2>
-            ${rep.tracks.map(t => `<audio controls src="${t.url}"></audio>`).join('')}
-          `;
-          container.appendChild(section);
-        });
-      });
-  </script>
-</body>
-</html>
+  for (const file of files) {
+    if (file.name.endsWith('.json')) {
+      const repData = await fetch(file.download_url).then(r => r.json());
+      const section = document.createElement('section');
+      section.innerHTML = `
+        <img src="${repData.image}" alt="${repData.date}">
+        <h2>${new Date(repData.date).toLocaleDateString('sv-SE')}</h2>
+        ${repData.tracks.map(t => `<audio controls src="${t.url}"></audio>`).join('')}
+      `;
+      repsContainer.appendChild(section);
+    }
+  }
+}
+loadReps();
+</script>
