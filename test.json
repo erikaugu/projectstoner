@@ -1,0 +1,8 @@
+{
+  "date": "2025-11-04",
+  "image": "/uploads/replokal.jpg",
+  "tracks": [
+    { "url": "/uploads/låt1.mp3" },
+    { "url": "/uploads/låt2.mp3" }
+  ]
+}
