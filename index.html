@@ -1,7 +1,7 @@
 <script>
 async function loadReps() {
   const repsContainer = document.getElementById('reps');
-  const response = await fetch('https://api.github.com/repos/<projectstoner>/bandrep-site/contents/_reps');
+  const response = await fetch('https://api.github.com/repos/<erikaugu>/projectstoner/contents/_reps');
   const files = await response.json();
 
   for (const file of files) {
@@ -19,3 +19,4 @@ async function loadReps() {
 }
 loadReps();
 </script>
+
